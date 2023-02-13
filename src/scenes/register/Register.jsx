@@ -49,7 +49,7 @@ export default function SignUp() {
   const handleSubmit = (event) => {
     event.preventDefault();
     dispatch(signupUser({user_fname, user_lname, user_email}))
-    console.log("formData", formData);
+    // console.log("formData", formData);
   };
 
   return (

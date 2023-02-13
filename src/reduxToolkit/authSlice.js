@@ -4,13 +4,14 @@ import axios from "axios";
 const initialState = {
     msg: "",
     userInfo: "",
-    token: "",
+    token: "",      //for storing the JWT
     loading: false,
     error: ""
 }
 
 const registerApi = "http://vrm.webvilleedemo.xyz/api/createVendor"
 
+//Actions
 //register user
 export const signupUser = createAsyncThunk('registerUser', async ({ user_fname, user_lname, user_email }) => {
     const config = {
@@ -27,8 +28,17 @@ export const signupUser = createAsyncThunk('registerUser', async ({ user_fname, 
     }
 })
 
+//login user
+// export const loginUser = createAsyncThunk('loginUser', async ({}) => {
+//     const config  = {
+//         headers : {
+//             'Content-Type' : 'application/json'
+//         }
+//     }
+//     const body = JSON.stringify({user})
+// })
 
-
+//authSlice
 const authSlice = createSlice({
     name: "user",
     initialState,
@@ -36,6 +46,7 @@ const authSlice = createSlice({
 
     },
     extraReducers: {
+        //register user
         [signupUser.pending]: (state) => {
             state.loading = true
         },

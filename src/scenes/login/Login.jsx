@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -30,16 +30,24 @@ function Copyright(props) {
 const theme = createTheme();
 
 const Login = () => {
+  const [formData, setFormData] = useState({
+    user_email : "",
+    user_password : ""
+  })
+  
+  const {user_email, user_password} = formData;
+
+  const handleChange = (e) => {
+    return setFormData({...formData, [e.target.name] : e.target.value})
+  }
+
+
   const navigate = useNavigate()
     const handleSubmit = (event) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-          email: data.get('email'),
-          password: data.get('password'),
-        });
+       console.log("formDataLogin", formData)
         alert("login successful")
-        setTimeout(()=>{navigate("/dashboard")},1000)
+        setTimeout(()=>{navigate("/login")},1000)
       };
     
       return (
@@ -67,19 +75,23 @@ const Login = () => {
                   fullWidth
                   id="email"
                   label="Email Address"
-                  name="email"
+                  name="user_email"
                   autoComplete="email"
                   autoFocus
+                  value={user_email}
+                  onChange={(e) => handleChange(e)}
                 />
                 <TextField
                   margin="normal"
                   required
                   fullWidth
-                  name="password"
+                  name="user_password"
                   label="Password"
                   type="password"
                   id="password"
                   autoComplete="current-password"
+                  value={user_password}
+                  onChange={(e) => handleChange(e)}
                 />
                 <FormControlLabel
                   control={<Checkbox value="remember" color="primary" />}
