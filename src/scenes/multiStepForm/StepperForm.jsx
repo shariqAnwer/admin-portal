@@ -160,7 +160,7 @@ const StepperForm = () => {
             {steps.map((step, index) => {
               return (
 
-                <Step><StepLabel>{step}</StepLabel></Step>
+                <Step key={index}><StepLabel>{step}</StepLabel></Step>
               )
             })}
           </Stepper>
