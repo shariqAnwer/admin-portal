@@ -36,7 +36,7 @@ export const signupUser = createAsyncThunk('registerUser', async ({ user_fname, 
 })
 
 //login user
-export const loginUser = createAsyncThunk('loginUser', async ({ user_email, user_password } , { rejectWithValue }) => {
+export const loginUser = createAsyncThunk('loginUser', async ({ user_email, user_password }, { rejectWithValue }) => {
     const config = {
         headers: {
             'Content-Type': "application/json"
@@ -50,10 +50,10 @@ export const loginUser = createAsyncThunk('loginUser', async ({ user_email, user
             localStorage.setItem('userToken', response.data.data)
             console.log(response.data)
             return response.data
-          } 
-          else {
+        }
+        else {
             return null
-          }
+        }
 
     } catch (error) {
         console.log("Error", error.response.data)
@@ -79,7 +79,7 @@ export const loginUser = createAsyncThunk('loginUser', async ({ user_email, user
 //         );
 //         let data = await response.json();
 //         console.log('data', data, response.status);
-  
+
 //         if (response.status === 200) {
 //           return { ...data };
 //         } else {
@@ -92,6 +92,8 @@ export const loginUser = createAsyncThunk('loginUser', async ({ user_email, user
 //     }
 //   );
 
+
+
 //authSlice
 const authSlice = createSlice({
     name: "user",
@@ -101,9 +103,9 @@ const authSlice = createSlice({
             state.error = false
             state.success = false;
             state.loading = false;
-      
+
             return state;
-          },
+        },
     },
     extraReducers: {
         //login
@@ -144,7 +146,7 @@ const authSlice = createSlice({
         //   [fetchUserBytoken.fulfilled]: (state, { payload }) => {
         //     state.isFetching = false;
         //     state.isSuccess = true;
-      
+
         //     state.email = payload.email;
         //     state.username = payload.name;
         //   },
