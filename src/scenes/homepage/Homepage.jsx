@@ -1,19 +1,26 @@
-import React from "react";
+import React, {useEffect} from "react";
 
 import { Button } from "@mui/material";
-// import { Redirect } from "react-router-dom";
-// import { useSelector } from "react-redux";
+import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const Landing = () => {
-//   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
 //   useEffect(() => {
 //     document.title = "Project Calendar";
 //   }, []);
 
-//   if (isAuthenticated) {
-//     return <Redirect to="/dashboard" />;
-//   }
+
+const navigate = useNavigate();
+
+const user = useSelector((state) => state.user)
+console.log("user", user)
+useEffect(() => {
+  if(!user) {
+    navigate("/login")
+  }
+  // localStorage.removeItem('userToken')
+}, [user, navigate])
 
   return (
     <section className="landing">

@@ -14,7 +14,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser, userSelector } from '../../reduxToolkit/authSlice';
+import { loginUser, userSelector, clearState } from '../../reduxToolkit/authSlice';
 // import toast from "react-hot-toast"
 
 
@@ -64,11 +64,12 @@ const Login = () => {
     if (error) {
       // toast.error(message);
       alert(message)
-      // dispatch(clearState());
+       setTimeout(() => {
+        navigate('/login');
+      }, 2000)
     }
 
     if (success) {
-      // dispatch(clearState());
       // toast.success(message);
       alert(message)
 
@@ -76,6 +77,8 @@ const Login = () => {
         navigate('/vendorForm');
       }, 2000)
     }
+    //dispatch(clearState());
+
     // eslint-disable-next-line
   }, [error, success]);
 

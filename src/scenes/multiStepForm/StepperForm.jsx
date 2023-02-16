@@ -38,8 +38,8 @@ const StepperForm = () => {
   }
   function getStepsContent(step) {
     const options = [
-      { key: "1", value: "Yes" },
-      { key: "2", value: "No" },
+      { key: "true", value: "true" },
+      { key: "false", value: "false" },
     ]
     const skills = [
       { key: "1", value: "Node" },

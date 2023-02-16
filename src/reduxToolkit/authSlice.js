@@ -1,15 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// initialize userToken from local storage
-// const userToken = localStorage.getItem('userToken')
-//   ? localStorage.getItem('userToken')
-//   : null
+// get user from local storage
+const userToken = localStorage.getItem('userToken')
 
 const initialState = {
     message: "",
     userInfo: null,
-    userToken: "",      //for storing the JWT
+    userToken: userToken ? userToken : null,      //for storing the JWT
     loading: false,
     error: false,
     success: false,
@@ -28,10 +26,12 @@ export const signupUser = createAsyncThunk('registerUser', async ({ user_fname, 
     };
     const body = JSON.stringify({ user_fname, user_lname, user_email })
     try {
-        await axios.post(`${registerApi}`, body, config)
+        return await axios.post(`${registerApi}`, body, config)
 
     } catch (error) {
         console.log(error)
+        // const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+        // return thunkAPI.rejectWithValue(message)
     }
 })
 
@@ -48,7 +48,7 @@ export const loginUser = createAsyncThunk('loginUser', async ({ user_email, user
         console.log("response", response.data)
         if (response.status === 200) {
             localStorage.setItem('userToken', response.data.data)
-            console.log(response.data)
+            console.log(response.data)        
             return response.data
         }
         else {
@@ -103,7 +103,8 @@ const authSlice = createSlice({
             state.error = false
             state.success = false;
             state.loading = false;
-
+            state.message = "";
+            state.userInfo = "";
             return state;
         },
     },
@@ -113,20 +114,20 @@ const authSlice = createSlice({
             state.loading = true
         },
         [loginUser.fulfilled]: (state, { payload }) => {
+            // console.log("payload===",payload.data)
             state.loading = false   // login successful
-            state.userInfo = payload.data.data
-            state.userToken = payload.data.data
+            state.userInfo = ""
+            state.userToken = payload.data
             state.message = payload.message
             state.success = true
+            state.error = false;
         },
         [loginUser.rejected]: (state, { payload }) => {
-            // state.loading = false
-            // state.message = payload.message
-            // state.userInfo = payload.data
-            // state.message = payload.message
+            state.userToken = ""
             state.loading = false   // login successful
-            state.message = payload.data.message
-            state.success = true
+            state.message = payload.message
+            state.success = false;
+            state.error = true;
         },
         //register user
         [signupUser.pending]: (state) => {
@@ -134,10 +135,12 @@ const authSlice = createSlice({
         },
         [signupUser.fulfilled]: (state, { payload }) => {
             state.loading = false   // registration successful
+            state.success = true
         },
         [signupUser.rejected]: (state, { payload }) => {
-            state.loading = false
-            state.error = payload
+            state.loading = false;
+            state.error = true;
+            state.error = payload;
         },
         //fetchUserToken
         // [fetchUserBytoken.pending]: (state) => {
@@ -158,7 +161,7 @@ const authSlice = createSlice({
     }
 })
 
-// export const { clearState } = userSlice.actions;
+export const { clearState } = authSlice.actions;    //for logout
 
 export default authSlice.reducer
 

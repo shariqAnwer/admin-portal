@@ -1,9 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import jwt from 'jwt-decode'
 
 const initialState = {}
 const vendorOnboardingApi = "http://vrm.webvilleedemo.xyz/api/vendorOnboarding"
-
+const jwtStr = localStorage.getItem('userToken')
+// console.log("jwtStr",jwtStr)
 
 // vendorOnboardingApi
 export const vendorOnboarding = createAsyncThunk('vendorOnboarding', async ({ vendor_company,
@@ -21,7 +23,8 @@ export const vendorOnboarding = createAsyncThunk('vendorOnboarding', async ({ ve
     vendor_contact2 }) => {
     const config = {
         headers: {
-            'Content-Type': "application/json"
+            'Content-Type': "application/json",
+            'Authorization' : 'Bearer ' + jwtStr
         },
     };
     const body = JSON.stringify({ vendor_company,
@@ -38,7 +41,9 @@ export const vendorOnboarding = createAsyncThunk('vendorOnboarding', async ({ ve
         vendor_email2,
         vendor_contact2})
     try {
-        await axios.post(`${vendorOnboardingApi}`, body, config)
+        const {data} = await axios.post(`${vendorOnboardingApi}`, body, config)
+        console.log("dataVendor", data)
+        return data
 
     } catch (error) {
         console.log(error)
