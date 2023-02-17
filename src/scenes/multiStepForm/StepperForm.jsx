@@ -42,12 +42,13 @@ const StepperForm = () => {
       { key: "false", value: "false" },
     ]
     const skills = [
-      { key: "1", value: "Node" },
-      { key: "2", value: "React" },
-      { key: "3", value: "Salesforce" },
-      { key: "4", value: "MongoDB" },
-      { key: "5", value: "PHP" },
+      { key: "Node", value: "Node" },
+      { key: "React", value: "React" },
+      { key: "PHP", value: "PHP" },
+      { key: "Andriod", value: "Andriod" },
+      { key: "Salesforce", value: "Salesforce" },
     ]
+      
     const vendorTypes = [
       { key: "1", value: "1" },
       { key: "2", value: "2" },
@@ -123,7 +124,7 @@ const StepperForm = () => {
               value={vendor_technical_skills}
               onChange={(e) => handleChange(e)}
             >
-              {skills.map((option) => {
+              {skills.map((option, i) => {
                 return (<MenuItem key={option.key} value={option.key}>{option.value}</MenuItem>)
               })}
             </TextField>

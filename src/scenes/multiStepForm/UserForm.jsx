@@ -14,7 +14,7 @@ const UserForm = () => {
 const user = useSelector((state) => state.user)
 // console.log("user", user)
 useEffect(() => {
-  if(!user) {
+  if(user.success === false) {
     dispatch(clearState)
     navigate("/login")
   }

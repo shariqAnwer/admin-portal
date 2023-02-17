@@ -19,6 +19,7 @@ import Login from "./scenes/login/Login";
 import Register from "./scenes/register/Register";
 import Homepage from "./scenes/homepage/Homepage";
 import UserForm from "./scenes/multiStepForm/UserForm";
+import VendorFormData from "./scenes/vendorOnboardingFormDetails/index.jsx";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -37,6 +38,7 @@ function App() {
               <Route path='/login' element={<Login />} />
               <Route path='/register' element={<Register />} />
               <Route path="/vendorForm" element={<UserForm />} /> 
+              <Route path="/vendorFormData" element={<VendorFormData />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/team" element={<Team />} />
               <Route path="/contacts" element={<Contacts />} />

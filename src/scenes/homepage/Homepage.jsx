@@ -1,26 +1,11 @@
-import React, {useEffect} from "react";
-
+import React from "react";
 import { Button } from "@mui/material";
-import { useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
 
 const Landing = () => {
 
 //   useEffect(() => {
 //     document.title = "Project Calendar";
 //   }, []);
-
-
-const navigate = useNavigate();
-
-const user = useSelector((state) => state.user)
-console.log("user", user)
-useEffect(() => {
-  if(!user) {
-    navigate("/login")
-  }
-  // localStorage.removeItem('userToken')
-}, [user, navigate])
 
   return (
     <section className="landing">

@@ -18,7 +18,7 @@ const loginApi = "http://vrm.webvilleedemo.xyz/api/signin"
 
 //Actions
 //register user
-export const signupUser = createAsyncThunk('registerUser', async ({ user_fname, user_lname, user_email }) => {
+export const signupUser = createAsyncThunk('registerUser', async ({ user_fname, user_lname, user_email }, { rejectWithValue }) => {
     const config = {
         headers: {
             'Content-Type': "application/json"
@@ -26,12 +26,13 @@ export const signupUser = createAsyncThunk('registerUser', async ({ user_fname, 
     };
     const body = JSON.stringify({ user_fname, user_lname, user_email })
     try {
-        return await axios.post(`${registerApi}`, body, config)
+        const response = await axios.post(`${registerApi}`, body, config)
+        return response
 
     } catch (error) {
         console.log(error)
         // const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
-        // return thunkAPI.rejectWithValue(message)
+        return rejectWithValue(error.response)
     }
 })
 
@@ -58,6 +59,17 @@ export const loginUser = createAsyncThunk('loginUser', async ({ user_email, user
     } catch (error) {
         console.log("Error", error.response.data)
         return rejectWithValue(error.response)
+    }
+})
+
+//logout user
+export const logoutUser = createAsyncThunk('logoutUser', async () => {
+    try {
+        localStorage.removeItem('userToken')
+        return true
+    } catch (error) {
+        console.log(error)
+        return false
     }
 })
 
@@ -105,6 +117,7 @@ const authSlice = createSlice({
             state.loading = false;
             state.message = "";
             state.userInfo = "";
+            state.userToken = "";
             return state;
         },
     },
@@ -141,6 +154,9 @@ const authSlice = createSlice({
             state.loading = false;
             state.error = true;
             state.error = payload;
+        },
+        [logoutUser.fulfilled]: (state) => {
+            state.userToken = null;
         },
         //fetchUserToken
         // [fetchUserBytoken.pending]: (state) => {

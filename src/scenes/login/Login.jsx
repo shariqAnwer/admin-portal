@@ -14,7 +14,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser, userSelector, clearState } from '../../reduxToolkit/authSlice';
+import { loginUser, userSelector } from '../../reduxToolkit/authSlice';
 // import toast from "react-hot-toast"
 
 
@@ -66,16 +66,14 @@ const Login = () => {
       alert(message)
        setTimeout(() => {
         navigate('/login');
-      }, 2000)
-    }
-
-    if (success) {
+      }, 1000)
+    }else if (success) {
       // toast.success(message);
       alert(message)
 
       setTimeout(() => {
         navigate('/vendorForm');
-      }, 2000)
+      }, 1000)
     }
     //dispatch(clearState());
 
