@@ -13,7 +13,7 @@ const initialState = {
     success: false,
 }
 
-const registerApi = "http://vrm.webvilleedemo.xyz/api/createVendor"
+const registerApi = "http://vrm.webvilleedemo.xyz/api/createVendor" //make changes before deployment
 const loginApi = "http://vrm.webvilleedemo.xyz/api/signin"
 
 //Actions
@@ -48,8 +48,7 @@ export const loginUser = createAsyncThunk('loginUser', async ({ user_email, user
         const response = await axios.post(`${loginApi}`, body, config)
         console.log("response", response.data)
         if (response.status === 200) {
-            localStorage.setItem('userToken', response.data.data)
-            console.log(response.data)        
+            localStorage.setItem('userToken', response.data.data)      
             return response.data
         }
         else {
@@ -58,6 +57,7 @@ export const loginUser = createAsyncThunk('loginUser', async ({ user_email, user
 
     } catch (error) {
         console.log("Error", error.response.data)
+        alert("")
         return rejectWithValue(error.response)
     }
 })

@@ -36,8 +36,16 @@ const theme = createTheme();
 const Login = () => {
   const [formData, setFormData] = useState({
     user_email: "",
-    user_password: ""
+    user_password: "",
   })
+
+  // const [checked, setChecked] = useState(false);
+
+  // const handleCheckbox = (event) => {
+  //   console.log("checkbox", event.target.checked)  //output- boolean
+  //   setChecked(event.target.checked)
+
+  // }
 
   const { user_email, user_password } = formData;
 
@@ -45,7 +53,7 @@ const Login = () => {
     return setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
-  const { success, error, message } = useSelector(
+  const { success, error, message, userToken } = useSelector(
     userSelector
   );
   console.log("====>", success, error, message)
@@ -61,19 +69,19 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (error) {
+    if (!userToken && message) {
       // toast.error(message);
       alert(message)
        setTimeout(() => {
         navigate('/login');
-      }, 1000)
-    }else if (success) {
+      }, 0)
+    }else if (userToken) {
       // toast.success(message);
-      alert(message)
+      // alert(message)
 
-      setTimeout(() => {
-        navigate('/vendorForm');
-      }, 1000)
+      navigate('/vendorForm');
+      // setTimeout(() => {
+      // },500)
     }
     //dispatch(clearState());
 
@@ -124,7 +132,9 @@ const Login = () => {
               onChange={(e) => handleChange(e)}
             />
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
+              control={<Checkbox 
+                //onChange={handleCheckbox} 
+                value="remember" color="primary" />}
               label="Remember me"
             />
             <Button

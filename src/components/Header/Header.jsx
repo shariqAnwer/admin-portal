@@ -46,7 +46,7 @@ function Header() {
   const onLogout = () => {
     dispatch(logoutUser());
     dispatch(clearState)
-    localStorage.removeItem('userToke');
+    localStorage.removeItem('userToken');
     navigate('/');
   }
 
